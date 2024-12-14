@@ -1,0 +1,50 @@
+﻿@model _2024_2C_SushiPOP_G5.Models.Carrito
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Carrito</h1>
+
+@if (Model != null)
+{
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>
+                    Producto
+                </th>
+                <th>
+                    Cantidad
+                </th>
+                <th>
+                    Precio unit. con dto.
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CarritoItems)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrecioUnitConDto)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="Pedidos" asp-action="VerDetalle" class="btn btn-primary">Ordenar</a>
+} else
+{
+    <h2>No hay productos en el carrito</h2>
+    <a asp-controller="Productos" asp-action="Index" class="btn btn-primary">Buscar productos</a>
+}

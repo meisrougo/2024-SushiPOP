@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SushiPop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .hero-container {
+            position: relative;
+            text-align: center;
+            color: #fff;
+            padding: 75px 20px;
+        }
+
+            .hero-container strong {
+                font-size: 36px;
+                font-weight: bold;
+            }
+
+            .hero-container .blanco {
+                color: #fff;
+            }
+
+            .hero-container .rojo {
+                color: #FF6F61;
+            }
+
+            .hero-container img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+                z-index: -1;
+                filter: brightness(0.7);
+            }
+
+        .productos-destacados {
+            margin: 40px 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .productos-destacados h2 {
+                font-size: 32px;
+                color: #000000;
+                margin-bottom: 20px;
+            }
+
+        .producto {
+            position: relative;
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+            .producto:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .producto img {
+                width: 100%; /* Tamaño original sin recorte */
+                height: auto; /* Mantener proporciones */
+                display: block; /* Asegura que no haya espacios blancos */
+            }
+
+            .producto h3 {
+                position: absolute;
+                bottom: 0;
+                width: 100%; /* Mismo ancho que la imagen */
+                background-color: rgba(0, 0, 0, 0.7); /* Fondo negro semitransparente */
+                color: #fff;
+                padding: 8px 0;
+                font-size: 16px;
+                text-align: center;
+            }
+
+        .favoritos {
+            margin: 40px 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .favoritos h2 {
+                font-size: 32px;
+                color: #000000;
+                margin-bottom: 20px;
+            }
+
+        .producto-favorito {
+            position: relative;
+            display: inline-block;
+            width: 30%;
+            margin: 20px;
+        }
+
+            .producto-favorito img {
+                width: 100%;
+                height: auto; /* Mantener proporciones */
+            }
+
+            .producto-favorito h3, .producto-favorito p {
+                margin: 10px 0;
+            }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-container">
+        @using System.Globalization
+        @{
+            var culturaEspañol = new CultureInfo("es-ES");
+            var diaSemana = DateTime.Now.ToString("dddd", culturaEspañol);
+        }
+        <strong>
+            <span class="blanco">¡Hoy es</span>
+            <span class="rojo"> @diaSemana</span>
+            <span class="blanco">. Disfruta del mejor sushi</span>
+            <span class="rojo">#EnCasa</span>
+            <span class="blanco">con amigos. 🍣</span>
+        </strong>
+        <img src="/images/bg_hero.png" alt="Imagen de fondo">
+    </div>
+
+    <!-- Sección de productos destacados -->
+    <section id="productos-destacados" class="productos-destacados">
+        <h2 class="text-center">Los favoritos 😉</h2>
+        <div>
+            <div class="producto">
+                <img src="/images/fav_postre.png" alt="Postre oreo">
+                <a href="https://localhost:7008/Productos/Details/16">
+                    <h3>Postre helado OREO</h3>
+                </a>
+            </div>
+            <div class="producto">
+                <img src="/images/fav_tabla.png" alt="Combo de sushi 40 piezas">
+                <a href="https://localhost:7008/Productos/Details/15">
+                    <h3>Combo 100% salmón Alaska XL de 40 piezas</h3>
+                </a>
+            </div>
+            <div class="producto">
+                <img src="/images/fav_arrolladitos.png" alt="Empanaditas chinas">
+                <a href="https://localhost:7008/Productos/Details/17">
+                    <h3>Empanaditas chinas de carne</h3>
+                </a>
+            </div>
+            <div class="producto">
+                <img src="/images/fav_tempura.png" alt="Langostinos Rebozados">
+                <a href="https://localhost:7008/Productos/Details/18">
+                    <h3>Langostinos rebozados en panko fritos con salsa de tamarindo</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de locales -->
+    <section id="favoritos" class="favoritos">
+        <h2>Nuestros Locales</h2>
+        <div>
+            <div class="producto-favorito">
+                <img src="/images/LocalPalermo.jpg" alt="Local Palermo">
+                <h3>Local Palermo</h3>
+                <p>Av Siempre Viva 123</p>
+            </div>
+            <div class="producto-favorito">
+                <img src="/images/LocalCaballito.jpg" alt="Local Recoleta">
+                <h3>Local Recoleta</h3>
+                <p>Av Siempre Viva 123</p>
+            </div>
+            <div class="producto-favorito">
+                <img src="/images/LocalRecoleta.jpg" alt="Local Caballito">
+                <h3>Local Caballito</h3>
+                <p>Av Siempre Viva 123</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

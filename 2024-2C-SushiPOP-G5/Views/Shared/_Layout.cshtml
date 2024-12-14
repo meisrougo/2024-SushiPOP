@@ -1,0 +1,169 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - _2024_2C_SushiPOP_G5</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/_2024_2C_SushiPOP_G5.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        
+        .container {
+            padding-bottom: 80px;
+        }
+
+        footer.footer {
+            position: relative; 
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <!-- Logo -->
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" alt="Logo SushiPOP" height="50">
+                </a>
+
+                <!-- Menú desplegable -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bars" style="color: #000000;"></i> Menú
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <!-- Opción para todos -->
+                            <li>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Volver a inicio</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-area="" asp-controller="Productos" asp-action="Index">Productos</a>
+                            </li>
+                            <!-- Opción para empleados y clientes -->
+                            @if (User.IsInRole("EMPLEADO") || User.IsInRole("CLIENTE"))
+                            {
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Pedidos" asp-action="Index">Pedidos</a>
+                                </li>
+                            }
+                            <!-- Opciones específicas para empleados -->
+                            @if (User.IsInRole("EMPLEADO"))
+                            {
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Categorias" asp-action="Index">Categorías</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- Menú principal -->
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mx-auto">
+                        @if (ViewBag.Categorias != null)
+                        {
+                            foreach (var categoria in ViewBag.Categorias)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="PorCategoria" asp-route-id="@categoria.Id">
+                                        @categoria.Nombre
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+
+                <!-- Menú derecho -->
+                <ul class="navbar-nav">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <!-- Botón de Perfil -->
+                        <a class="nav-item nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Perfil">
+                            <i class="fas fa-user" style="color: #EC1C24;"></i>
+                        </a>
+
+                        <!-- Botón de Cerrar Sesión -->
+                        <a class="nav-item nav-link text-dark" asp-area="" asp-controller="Login" asp-action="CerrarSesion">
+                            <i class="fas fa-sign-out-alt" style="color: #EC1C24;"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <!-- Botón de Iniciar Sesión -->
+                        <a class="nav-item nav-link text-dark" asp-area="" asp-controller="Login" asp-action="IniciarSesion">
+                            <i class="fas fa-user" style="color: #EC1C24;"></i>
+                        </a>
+                    }
+
+                    <!-- Carrito para clientes -->
+                    @if (User.IsInRole("CLIENTE"))
+                    {
+                        <a class="nav-item nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="Index">
+                            <i class="fas fa-shopping-cart" style="color: #EC1C24;"></i>
+                        </a>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted" style="background-color: #343a40; color: white; padding: 20px 0;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div class="footer-logo" style="flex: 1; text-align: left;">
+                <img src="~/images/logo.png" alt="SushiPop Logo" height="50">
+            </div>
+
+            <!-- Enlaces de categorías -->
+            <div class="footer-links" style="flex: 1; text-align: center;">
+                <a href="@Url.Action("Index", "Productos")" style="color: white; text-decoration: none; margin: 0 15px;">Productos</a>
+
+                <!-- Mostrar categorías del usuario -->
+                @if (ViewBag.Categorias != null)
+                {
+                    foreach (var categoria in ViewBag.Categorias)
+                    {
+                        <a href="@Url.Action("PorCategoria", "Productos", new { id = categoria.Id })" style="color: white; text-decoration: none; margin: 0 15px;">
+                            @categoria.Nombre
+                        </a>
+                    }
+                }
+            </div>
+
+            <!-- Derechos de autor -->
+            <div class="footer-rights" style="flex: 1; text-align: right;">
+                <p style="margin: 0; font-size: 14px;">&copy; 2024 SushiPop - Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

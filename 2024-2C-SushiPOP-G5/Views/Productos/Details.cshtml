@@ -1,0 +1,85 @@
+﻿@model _2024_2C_SushiPOP_G5.Models.Producto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Producto</h4>
+    <hr />
+    <div class="row">
+        <!-- Imagen alineada a la izquierda -->
+        <div class="col-md-3">
+            <img src="@Model.Foto" class="img-fluid rounded" alt="@Model.Nombre" style="height: 200px; object-fit: contain;">
+        </div>
+
+        <!-- Información del producto -->
+        <div class="col-md-9">
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Descripcion)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Precio)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Precio)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Categoria)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Categoria.Nombre)
+                </dd>
+                @if (User.IsInRole("EMPLEADO"))
+                {
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Stock)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Stock)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Costo)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Costo)
+                    </dd>
+                }
+            </dl>
+        </div>
+    </div>
+</div>
+
+<!-- Acciones y botones -->
+<div>
+    @if (User.IsInRole("CLIENTE"))
+    {
+        <form asp-controller="CarritoItems" asp-action="Create" method="post">
+            <input type="hidden" name="ProductoId" value="@Model.Id" />
+            <select name="Cantidad" class="form-select">
+                @for (int i = 1; i <= Model.Stock; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-sm btn-outline-primary">Agregar al carrito</button>
+        </form>
+    }
+    @if (User.IsInRole("EMPLEADO"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+    }
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary">Back to List</a>
+</div>

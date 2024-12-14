@@ -1,0 +1,32 @@
+﻿@model IEnumerable<_2024_2C_SushiPOP_G5.Models.Producto>
+
+<h1>@ViewBag.CategoriaNombre</h1>
+
+<div class="row">
+    @foreach (var producto in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img src="@producto.Foto" class="card-img-top" alt="@producto.Nombre" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@producto.Nombre</h5>
+                    <p class="card-text">Precio: $@producto.Precio</p>
+                    <a href="@Url.Action("Details", "Productos", new { id = producto.Id })" class="btn btn-primary">Ver más</a>
+                    @if (User.IsInRole("CLIENTE"))
+                    {
+                        <form asp-controller="CarritoItems" asp-action="Create" method="post">
+                            <input type="hidden" name="ProductoId" value="@producto.Id" />
+                            <select name="Cantidad" class="form-select">
+                                @for (int i = 1; i <= producto.Stock; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn bnt-sm btn-outline-primary">Agregar al carrito</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

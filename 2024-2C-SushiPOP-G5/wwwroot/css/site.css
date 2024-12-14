@@ -1,0 +1,69 @@
+/* Estilos generales */
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%; /* Asegura que el contenido cubra toda la altura del viewport */
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px; /* Aumenta el tamaño de fuente en dispositivos más grandes */
+    }
+}
+
+body {
+    font-family: 'Nunito', sans-serif; /* Aplica fuente Nunito globalmente */
+    font-weight: 700; /* Negrita por defecto */
+    margin: 0;
+    padding-bottom: 60px; /* Espacio para el footer */
+    display: flex;
+    flex-direction: column; /* Flexbox para estructura */
+    min-height: 100vh; /* Altura mínima del viewport */
+}
+
+/* Botones y controles */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb; /* Sombras para enfoque */
+}
+
+/* Navegación */
+.navbar-nav .nav-link {
+    color: #616572; /* Color de texto predeterminado */
+    margin: 0 10px; /* Espaciado entre enlaces */
+    transition: color 0.3s; /* Suaviza el cambio de color */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #EC1C24; /* Color al pasar el cursor */
+}
+
+.navbar-nav.ms-auto .nav-link {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+}
+
+.navbar-nav.ms-auto .nav-link i {
+    font-size: 1.5em; /* Tamaño de iconos */
+    color: #EC1C24; /* Color del icono */
+    margin-left: 15px; /* Espaciado entre iconos */
+}
+
+/* Logo */
+.navbar-brand img {
+    height: 50px; /* Tamaño fijo para el logo */
+}
+
+/* Footer */
+footer {
+    background-color: #343a40; /* Color de fondo */
+    color: white; /* Texto blanco */
+    text-align: center;
+    padding: 20px 0; /* Espaciado interno */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
